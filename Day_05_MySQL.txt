@@ -1,0 +1,378 @@
+Day_05_MySQL :-
+==  == =====
+
+DML:-
+===
+
+1.Insert
+  ------
+syntax:-
+------
+insert into table-name(column-names)values(column-values);
+
+
+
+mysql> show tables
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| pfs4               |
+| sys                |
++--------------------+
+5 rows in set (0.12 sec)
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use pfs4;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| codegnan_emp   |
+| company_staff  |
++----------------+
+2 rows in set (0.07 sec)
+
+mysql> alter table codegnan_emp rename to employees;
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> desc employees;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| EMPID     | char(5)      | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(30)  | YES  |     | NULL    |       |
+| LASTNAME  | varchar(100) | YES  |     | NULL    |       |
+| AGE       | int          | YES  |     | NULL    |       |
+| DOJ       | date         | YES  |     | NULL    |       |
+| ADDRESS   | tinytext     | YES  |     | NULL    |       |
+| DEPT      | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+7 rows in set (0.02 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LNAME,AGE,DOJ,ADDRESS,DEPT)VALUES
+    -> ('E0001','MURAKADA','LAYATRI',22,'2026-06-01','HYD','JAVA');
+ERROR 1054 (42S22): Unknown column 'LNAME' in 'field list'
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)        VALUES
+    -> ('E0001','MURAKADA','LAYATRI',22,'2026-06-01','VSP','PYTHON');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------+------+------------+---------+--------+
+| E0001 | MURAKADA  | LAYATRI  |   22 | 2026-06-01 | VSP     | PYTHON |
++-------+-----------+----------+------+------------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)        VALUES
+    -> ('E0002','HARIKA','PRIYADHARSHINI',21,'2026-06-10','VSP','PYTHON');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------------+------+------------+---------+--------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON |
++-------+-----------+----------------+------+------------+---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)        VALUES
+    -> ('E0003','BARNIKALA','DEEPIKA',21,'2026-06-05','VSP','PYTHON');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------------+------+------------+---------+--------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON |
++-------+-----------+----------------+------+------------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(FIRSTNAME,LASTNAME,DOJ,DEPT,AGE,EMPID,ADDRESS)
+    -> VALUES
+    -> ('SINDHU','MURAKADA','2023-08-15','CSE',20,'E004','HYD');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------------+------+------------+---------+--------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE    |
++-------+-----------+----------------+------+------------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES
+    -> ('E0005','SAI','VARDHAN',23,'2024-03-18','HYD','JAVA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMPLOYEES VALUES
+    -> ^C
+mysql> INSERT INTO EMPLOYEES VALUES
+    -> ('E0006','NIHARIKA','MURAKADA',20,'2025-09-20','VJY','DEV'),
+    -> ('E0007','ROSHAN','SATWIK',18,'2026-03-22','PUNE','QA');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------------+------+------------+---------+--------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE    |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA   |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV    |
+| E0007 | ROSHAN    | SATWIK         |   18 | 2026-03-22 | PUNE    | QA     |
++-------+-----------+----------------+------+------------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,DOJ,DEPT)VALUES
+    -> ('E0008','RADHA','1998',MARKETING);
+ERROR 1054 (42S22): Unknown column 'MARKETING' in 'field list'
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------------+------+------------+---------+--------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE    |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA   |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV    |
+| E0007 | ROSHAN    | SATWIK         |   18 | 2026-03-22 | PUNE    | QA     |
++-------+-----------+----------------+------+------------+---------+--------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,DOJ,DEPT)VALUES
+    -> ('E0008','RADHA','1998','MARKETING');
+ERROR 1292 (22007): Incorrect date value: '1998' for column 'DOJ' at row 1
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,DOJ,DEPT)VALUES
+    -> ('E0008','RADHA','1998-09-22',MARKETING);
+ERROR 1054 (42S22): Unknown column 'MARKETING' in 'field list'
+mysql> ('E0008','RADHA','1998-09-22','MARKETING');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''E0008','RADHA','1998-09-22','MARKETING')' at line 1
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,DOJ,DEPT)VALUES
+    -> ('E0008','RADHA','1998-09-22','MARKETING');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | SATWIK         |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | NULL           | NULL | 1998-09-22 | NULL    | MARKETING |
++-------+-----------+----------------+------+------------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES SET
+    -> EMPID='E0009',
+    -> FIRSTNAME='SEETHA',
+    -> LASTNAME='KUMAR',
+    -> AGE=52,
+    -> DOJ='1999-09-08',
+    -> ADDRESS='MUMBAI',
+    -> DEPT='SALES';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | SATWIK         |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | NULL           | NULL | 1998-09-22 | NULL    | MARKETING |
+| E0009 | SEETHA    | KUMAR          |   52 | 1999-09-08 | MUMBAI  | SALES     |
++-------+-----------+----------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+
+
+2.Update:-
+  ------
+UPDATE TABLE-NAME SET COLUMN-NAME-UPDATE-VALUE WHERE CONDITION;
+
+mysql> UPDATE EMPLOYEES SET LASTNAME='RANI' WHERE EMPID='E0007';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | RANI           |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | NULL           | NULL | 1998-09-22 | NULL    | MARKETING |
+| E0009 | SEETHA    | KUMAR          |   52 | 1999-09-08 | MUMBAI  | SALES     |
++-------+-----------+----------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEES SET LASTNAME='RANI' WHERE EMPID='E0009';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | RANI           |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | NULL           | NULL | 1998-09-22 | NULL    | MARKETING |
+| E0009 | SEETHA    | RANI           |   52 | 1999-09-08 | MUMBAI  | SALES     |
++-------+-----------+----------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEES SET LASTNAME='SATWUK' WHERE EMPID='E0007';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | SATWUK         |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | NULL           | NULL | 1998-09-22 | NULL    | MARKETING |
+| E0009 | SEETHA    | RANI           |   52 | 1999-09-08 | MUMBAI  | SALES     |
++-------+-----------+----------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEES SET LASTNAME='KRISHNA',AGE=25,ADDRESS='VSP' WHERE          EMPID='E0008';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | SATWUK         |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | KRISHNA        |   25 | 1998-09-22 | VSP     | MARKETING |
+| E0009 | SEETHA    | RANI           |   52 | 1999-09-08 | MUMBAI  | SALES     |
++-------+-----------+----------------+------+------------+---------+-----------+
+9 rows in set (0.00 sec)
+
+
+3.DELETE:-
+  ------
+SYNTAX:-
+------
+DELETE FROM EMPLOYEES WHERE FIRSTNAME='SAI',
+
+
+mysql> DELETE FROM EMPLOYEES WHERE LASTNAME = 'RANI';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E0003 | BARNIKALA | DEEPIKA        |   21 | 2026-06-05 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | SATWUK         |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | KRISHNA        |   25 | 1998-09-22 | VSP     | MARKETING |
++-------+-----------+----------------+------+------------+---------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMPLEES WHERE EMPID='E0003'
+    -> ;
+ERROR 1146 (42S02): Table 'pfs4.emplees' doesn't exist
+mysql> DELETE FROM EMPLOYEES WHERE EMPID='E0003'
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------------+------+------------+---------+-----------+
+| EMPID | FIRSTNAME | LASTNAME       | AGE  | DOJ        | ADDRESS | DEPT      |
++-------+-----------+----------------+------+------------+---------+-----------+
+| E0001 | MURAKADA  | LAYATRI        |   22 | 2026-06-01 | VSP     | PYTHON    |
+| E0002 | HARIKA    | PRIYADHARSHINI |   21 | 2026-06-10 | VSP     | PYTHON    |
+| E004  | SINDHU    | MURAKADA       |   20 | 2023-08-15 | HYD     | CSE       |
+| E0005 | SAI       | VARDHAN        |   23 | 2024-03-18 | HYD     | JAVA      |
+| E0006 | NIHARIKA  | MURAKADA       |   20 | 2025-09-20 | VJY     | DEV       |
+| E0007 | ROSHAN    | SATWUK         |   18 | 2026-03-22 | PUNE    | QA        |
+| E0008 | RADHA     | KRISHNA        |   25 | 1998-09-22 | VSP     | MARKETING |
++-------+-----------+----------------+------+------------+---------+-----------+
+7 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
