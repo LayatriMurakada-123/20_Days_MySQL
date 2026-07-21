@@ -1,0 +1,239 @@
+Day_08_MySQL :-
+==  == =====
+
+Constraints:-
+===========
+--> Constraints are the rules applied to the table columns in MySQL to ensure that only valid and accurate data os stored in
+    the  database.
+ 
+In simple words:
+Constraints = Rules that control the data entered into a table.
+
+why do we use Constraints:-
+--- -- -- --- -----------
+1. Maintain data integrity.
+2. Prevent invalid data entry.
+3. Avoid duplicate records.
+4. ensure relationships between tables.
+5. Make the database reliable and consistent.
+
+Types of Constraints:-
+----- -- -----------
+1. Not Null :- Doesn't allow null values but allows the duplicate values.
+
+2. Unique :- Doesn't allow Duplicate values but allows null values.
+
+3. Primary Key :- Primary key is a combination of Unique and(+) Not Null.
+
+4. Composite key :- Composite key is a combination of multiple primary keys.
+
+5. Foreign key :- Foreign key is a key used to link two tables together.
+              --> A foreign key is a field(or collection of fields) in one table that refers to the primary key in another
+                  table.
+              --> The table containing the foreign key is called the Child Table. And the table containing the candidate key
+                  is called as referenced table or parent table.
+
+6. Check :- It is used to check the values from the given table. depends on the conditions.
+
+7. default :- It gives the default values of the column like date and time by default.
+
+
+Referential Actions:-
+=========== =======
+--> Referential actions defines what happens to child table data when parent table data is deleted or updated.
+
+
+1. On Delete Cascade 
+2. On Update Cascade
+
+3. On Delete Set Null;
+4. On Update Set Null;
+
+
+mysql> use pfs4;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_pfs4  |
++-----------------+
+| backupemployees |
+| company_staff   |
+| employees       |
+| students        |
+| worker          |
+| workers         |
++-----------------+
+6 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Products (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  price DECIMAL(10,2),
+    ->  qty INT
+    ->  );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+mysql>
+mysql> INSERT INTO Products VALUES
+    ->  (1, 'Pen', 10.00, 100),
+    ->  (2, 'Notebook', 25.00, 50),
+    ->  (3, 'Pencil', 5.00, 200),
+    ->  (4, 'Eraser', 3.00, 300),
+    ->  (5, 'Marker', 15.00, 80),
+    ->  (6, 'Scale', 20.00, 150),
+    ->  (7, 'Sharpener', 8.00, 120),
+    ->  (8, 'Geometry Box', 120.00, 40),
+    ->  (9, 'Sketch Pen', 60.00, 75),
+    ->  (10, 'Crayons', 90.00, 55);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++------+--------------+--------+------+
+| id   | name         | price  | qty  |
++------+--------------+--------+------+
+|    1 | Pen          |  10.00 |  100 |
+|    2 | Notebook     |  25.00 |   50 |
+|    3 | Pencil       |   5.00 |  200 |
+|    4 | Eraser       |   3.00 |  300 |
+|    5 | Marker       |  15.00 |   80 |
+|    6 | Scale        |  20.00 |  150 |
+|    7 | Sharpener    |   8.00 |  120 |
+|    8 | Geometry Box | 120.00 |   40 |
+|    9 | Sketch Pen   |  60.00 |   75 |
+|   10 | Crayons      |  90.00 |   55 |
++------+--------------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_pfs4  |
++-----------------+
+| backupemployees |
+| company_staff   |
+| employees       |
+| products        |
+| students        |
+| worker          |
+| workers         |
++-----------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT NAME,PRICE,PRICE+(PRICE*0.12) AS TAX_PERCENT FROM PRODUCTS;
++--------------+--------+-------------+
+| NAME         | PRICE  | TAX_PERCENT |
++--------------+--------+-------------+
+| Pen          |  10.00 |     11.2000 |
+| Notebook     |  25.00 |     28.0000 |
+| Pencil       |   5.00 |      5.6000 |
+| Eraser       |   3.00 |      3.3600 |
+| Marker       |  15.00 |     16.8000 |
+| Scale        |  20.00 |     22.4000 |
+| Sharpener    |   8.00 |      8.9600 |
+| Geometry Box | 120.00 |    134.4000 |
+| Sketch Pen   |  60.00 |     67.2000 |
+| Crayons      |  90.00 |    100.8000 |
++--------------+--------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT NAME,PRICE,QTY,PRICE*QTY AS INVENTORY_VALUE FROM PRODUCTS;
++--------------+--------+------+-----------------+
+| NAME         | PRICE  | QTY  | INVENTORY_VALUE |
++--------------+--------+------+-----------------+
+| Pen          |  10.00 |  100 |         1000.00 |
+| Notebook     |  25.00 |   50 |         1250.00 |
+| Pencil       |   5.00 |  200 |         1000.00 |
+| Eraser       |   3.00 |  300 |          900.00 |
+| Marker       |  15.00 |   80 |         1200.00 |
+| Scale        |  20.00 |  150 |         3000.00 |
+| Sharpener    |   8.00 |  120 |          960.00 |
+| Geometry Box | 120.00 |   40 |         4800.00 |
+| Sketch Pen   |  60.00 |   75 |         4500.00 |
+| Crayons      |  90.00 |   55 |         4950.00 |
++--------------+--------+------+-----------------+
+10 rows in set (0.01 sec)
+
+mysql> SELECT NAME,PRICE,QTY,PRICE-5 AS DISCOUNT FROM PRODUCTS;
++--------------+--------+------+----------+
+| NAME         | PRICE  | QTY  | DISCOUNT |
++--------------+--------+------+----------+
+| Pen          |  10.00 |  100 |     5.00 |
+| Notebook     |  25.00 |   50 |    20.00 |
+| Pencil       |   5.00 |  200 |     0.00 |
+| Eraser       |   3.00 |  300 |    -2.00 |
+| Marker       |  15.00 |   80 |    10.00 |
+| Scale        |  20.00 |  150 |    15.00 |
+| Sharpener    |   8.00 |  120 |     3.00 |
+| Geometry Box | 120.00 |   40 |   115.00 |
+| Sketch Pen   |  60.00 |   75 |    55.00 |
+| Crayons      |  90.00 |   55 |    85.00 |
++--------------+--------+------+----------+
+10 rows in set (0.01 sec)
+
+mysql> SELECT NAME,PRICE,QTY,(QTY*PRICE)/10 AS PRICE_PER_10UNITS FROM PRODUCTS;
++--------------+--------+------+-------------------+
+| NAME         | PRICE  | QTY  | PRICE_PER_10UNITS |
++--------------+--------+------+-------------------+
+| Pen          |  10.00 |  100 |        100.000000 |
+| Notebook     |  25.00 |   50 |        125.000000 |
+| Pencil       |   5.00 |  200 |        100.000000 |
+| Eraser       |   3.00 |  300 |         90.000000 |
+| Marker       |  15.00 |   80 |        120.000000 |
+| Scale        |  20.00 |  150 |        300.000000 |
+| Sharpener    |   8.00 |  120 |         96.000000 |
+| Geometry Box | 120.00 |   40 |        480.000000 |
+| Sketch Pen   |  60.00 |   75 |        450.000000 |
+| Crayons      |  90.00 |   55 |        495.000000 |
++--------------+--------+------+-------------------+
+10 rows in set (0.01 sec)
+
+mysql> SELECT NAME,PRICE,QTY,(QTY%50!=0) AS N0T_MULTIPLE_OF_50 FROM PRODUCTS;
++--------------+--------+------+--------------------+
+| NAME         | PRICE  | QTY  | N0T_MULTIPLE_OF_50 |
++--------------+--------+------+--------------------+
+| Pen          |  10.00 |  100 |                  0 |
+| Notebook     |  25.00 |   50 |                  0 |
+| Pencil       |   5.00 |  200 |                  0 |
+| Eraser       |   3.00 |  300 |                  0 |
+| Marker       |  15.00 |   80 |                  1 |
+| Scale        |  20.00 |  150 |                  0 |
+| Sharpener    |   8.00 |  120 |                  1 |
+| Geometry Box | 120.00 |   40 |                  1 |
+| Sketch Pen   |  60.00 |   75 |                  1 |
+| Crayons      |  90.00 |   55 |                  1 |
++--------------+--------+------+--------------------+
+10 rows in set (0.01 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
