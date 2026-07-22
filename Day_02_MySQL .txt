@@ -1,3 +1,174 @@
 Day_02_MySQL :-
 ==  == =====
+Day_02_MySQL :-
+==  == =====
+
+Q. What are the difference between File Management System(FMS) and Database Management System(DBMS)?
+
+1.High data redundancy (duplicate data).
+  Reduce data redundancy
+
+2.Difficult to maintain and update.
+  Easy to maintain and update.
+
+3.Security is limited.
+  Provides strong security mechanism.
+
+4.Data sharing is difficult.
+  Multiple users can access data simultaneously.
+
+5.No relationship between files.
+  Supports relationships between tables.
+
+6.Backup and recovery is difficult.
+  provides backup and recovery features. 
+
+7.Suitable for small applications.
+  Suitable for small , medium and large applications
+
+
+
+Q. What are the difference between File Management System(FMS) and Database Management System(DBMS)?(IQ)
+
+A).A file system store data in separate files may less to data redundancy and security issues. A DBMS stores data in a structured manner using tables, reduces redundancy, provides security, supports multiple users, and ensures data consistency and integrity.
+
+Q. What is data , field , record , database?
+
+A). 
+
+Data:-
+----
+  ---> raw facts or figures without context
+  Ex:- 101,malli,60000,hyd
+
+Field:-
+-----
+Smallest unit of data in database(Column/Attribute)
+example : empid , empme , empsalaray ,empaddress
+
+Record:-
+------
+Collection of related fields(row/tuple).
+example:(101, Mali, 50000, hyd)
+
+Database:-
+--------
+Organized collection of related records stored together.
+example: In employee database contain all employee details.
+
+DBMS:-
+----
+A DBMS is a software used to create , store , retrieve , update and manage databases.
+
+
+Client-Server Architecture:-
+====== ====== ============
+
+In Client-Server arch they have 3 components such as
+Client
+Server
+Protocol
+
+Client:- The Role of the client in Client-Server arch is send request to the server. And to get response from the Server
+
+Server:- Server is a software the role of the server in Client-Server-arch is to take request from Clients. If the request is 
+         valid then it will generate some response we can handover that response to Client. If the client request is not a
+         valid request then it will raise the errors.
+
+Protocol:- It has a set of rules and regulations. The role of the protocol in Client-Server arch is to send request from 
+           client to server.
+
+
+
+Data Models in DBMS:
+==== ====== == ====
+def: A data model defines how data is stored , organised and manipulated in a database.
+
+1. Physical Data Model
+   -------- ---- -----
+==> Describes how data is physically stored in storage devices
+    audience : Database Administrators.
+
+2. Logical Data Model
+   ------- ---- -----
+==> Defines the structure of data (entities , attributes , relationships) independent of physical storage areas.
+    audience : developers and data base architects.
+
+3. Hierarchical Data Model
+   ------------ ---- -----
+==> Data is represented as a tree structure.(Parent-Child relationship)
+Ex: company-->departments-->employees.
+
+4. Network Data Model
+   ------- ---- -----
+==> Data is represented as graph with records(nodes) and relationships(edges).
+Ex: student enrolled in multiple courses, courses teach by multiple profeesors
+
+5. Relational Data Model(RDBMS)
+   ---------- ---- ----- -----
+==> Data is stored in tables(relations) with rows(tuple) and columns(attributes).
+Ex: student(id, name, marks, dept_id)
+    departments(dept_id, dept_name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
